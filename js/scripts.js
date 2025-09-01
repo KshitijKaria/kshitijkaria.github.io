@@ -143,7 +143,8 @@ const socialIcons = document.querySelectorAll('.social-icon');
     if (!window.__chatInited) {
         window.__chatInited = true;
 
-        const BACKEND_URL = "http://localhost:4000/chat"; // replace with deployed URL when live
+        // Replace localhost with your Render URL:
+        const BACKEND_URL = "https://kshitijkaria-github-io.onrender.com/chat";
 
         const chatFab   = document.getElementById("chat-fab");
         const chatBox   = document.getElementById("chatbot");
