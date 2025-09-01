@@ -34,6 +34,10 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li>
                 </ul>
             </div>
+            <div class="form-check form-switch position-fixed top-0 end-0 m-3">
+              <input class="form-check-input" type="checkbox" id="darkModeToggle">
+              <label class="form-check-label" for="darkModeToggle">Dark Mode</label>
+            </div>
         </nav>
         <!-- Page Content-->
         <div class="container-fluid p-0">
@@ -46,7 +50,7 @@
                     </h1>
                     <div class="subheading mb-5">
                        Toronto · (437) 262-1764 ·
-                        <a href="mailto:raja.n@northeastern.edu">kshitij.karia@mail.utoronto.ca</a><br><br>
+                        <a href="mailto:kshitij.karia@mail.utoronto.ca">kshitij.karia@mail.utoronto.ca</a><br><br>
                         <h3 class="mb-0">
                             Aspiring
                             <span class="text-primary">Software Developer</span>
@@ -75,18 +79,47 @@
                                 Europe, the Middle East and the Southeast East presented investment options 
                                 to Investors and Agents from India. I managed the backend tech platform, 
                                 ensuring flawless presentation and media streaming. </p>
-                                <img src="assets/img/pic-5.jpeg" width="571px" height="380px" alt="Image 1">
-                                <img src="assets/img/pic-6.jpeg" width="206px" height="380px" alt="Image 2">
-                                 <br></br>
-                                <iframe width="786" height="453" src="https://www.youtube.com/embed/lt28YK0PmK4" title="GLOBAL INVESMENT IMMIGRATION SUMMIT PROMO WITH NEW PLAC 200923" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                            
+                            <div class="mt-3">
+                              <!-- Video: full width, responsive -->
+                              <div class="ratio ratio-16x9 mb-3">
+                                <iframe class="w-100 h-100" src="https://www.youtube.com/embed/lt28YK0PmK4" title="GLOBAL INVESTMENT IMMIGRATION SUMMIT PROMO" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                              </div>
+
+                              <!-- Slideshow for event photos -->
+                              <div id="giisCarousel" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover" data-bs-touch="true">
+                                <div class="carousel-indicators">
+                                  <button type="button" data-bs-target="#giisCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                  <button type="button" data-bs-target="#giisCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <div class="ratio ratio-16x9">
+                                      <img src="assets/img/pic-5.jpeg" class="w-100 h-100" style="object-fit: cover;" alt="Event photo 1">
+                                    </div>
+                                  </div>
+                                  <div class="carousel-item">
+                                    <div class="ratio ratio-16x9">
+                                      <img src="assets/img/pic-6.jpeg" class="w-100 h-100" style="object-fit: contain; background: rgba(255,255,255,0.04);" alt="Event photo 2 (portrait)">
+                                    </div>
+                                  </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#giisCarousel" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#giisCarousel" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
+                              </div>
+                            </div>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">September 2023</span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Internship at NeuralTechSoft</h3>
-                            <div class="subheading mb-3"><a href="https://www.neuraltechsoft.com/" target="_blank" style="color: #1195D3;"> Neural Tech Soft</a></div>
+                            <div class="subheading mb-3"><a href="https://www.neuraltechsoft.com/" target="_blank" class="text-primary">Neural Tech Soft</a></div>
                             <p>I enrolled in an internship with “NeuralTechSoft’, a firm specializing in algorithmic trading. This exposed me to program-based trading and applications of computer algorithms in treasury functions. I created a program using algorithms that calculated the exponential moving stock price and recommended a buy, sell or hold status on a stock or Index. This experience gave me insight into the technicals of the stock market.</p>
                             
                         </div>
@@ -96,7 +129,7 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Intern</h3>
-                            <div class="subheading mb-3"><a href="https://moowing.in/" target="_blank" style="color: #1195D3;">Moowing</a></div>
+                            <div class="subheading mb-3"><a href="https://moowing.in/" target="_blank" class="text-primary">Moowing</a></div>
                             <p>I automated Moowing's business system by creating an app where all one had to do was input the travel route, and the requisite data would get populated from
                                 a backend database reducing the task time from three hours to a few seconds. I learned how software applications could significantly improve business
                                 efficiency, leading to higher profitability.</p>
@@ -406,5 +439,24 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <!-- Gemini Chatbot Widget -->
+        <div id="chatbot" style="position:fixed; right:16px; bottom:16px; width:320px; max-width:90vw; background:var(--bs-body-bg); color:var(--bs-body-color); border:1px solid rgba(0,0,0,.12); border-radius:12px; padding:10px; box-shadow:0 8px 24px rgba(0,0,0,.15); display:none; z-index:1080;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <strong>Ask Kshitij</strong>
+            <button id="chat-close" class="btn btn-sm btn-outline-secondary" aria-label="Close chat">×</button>
+          </div>
+          <div id="chat-log" style="height:220px; overflow-y:auto; font-size:14px; margin-bottom:8px;"></div>
+          <div class="input-group">
+            <input id="chat-input" class="form-control" placeholder="Ask me about my skills, projects…" aria-label="Chat input" />
+            <button id="chat-send" class="btn btn-primary" type="button">Send</button>
+          </div>
+        </div>
+
+        <!-- Floating action button to open chat -->
+        <button id="chat-fab" class="btn btn-primary glow" aria-label="Open chat"
+                style="position:fixed; right:16px; bottom:16px; border-radius:999px; padding:10px 14px; display:flex; align-items:center; gap:8px; z-index:1080;">
+          <span aria-hidden="true">💬</span>
+          <span class="d-none d-sm-inline">Chat with me</span>
+        </button>
     </body>
 </html>

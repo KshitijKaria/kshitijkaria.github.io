@@ -49,10 +49,9 @@ window.addEventListener('DOMContentLoaded', event => {
             if (entry.isIntersecting) {
                 const section = entry.target;
                 section.style.transition = 'background-color 0.5s ease';
-                section.style.backgroundColor = 'rgba(248, 249, 250, 0.5)'; // Light gray highlight
-                setTimeout(() => {
-                    section.style.backgroundColor = '';
-                }, 1000); // Fade out after 1 second
+                const isDark = document.body.classList.contains('dark-mode');
+                section.style.backgroundColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)';
+                setTimeout(() => { section.style.backgroundColor = ''; }, 1000);
             }
         });
     }, observerOptions);
@@ -73,7 +72,7 @@ responsiveNavItems.forEach(navItem => {
     textSpan.style.display = 'inline-block';
     navItem.addEventListener('mouseenter', () => {
         textSpan.style.transform = 'translateX(10px)';
-        textSpan.style.color = '#000';
+        textSpan.style.color = 'var(--bs-primary)';
     });
     navItem.addEventListener('mouseleave', () => {
         textSpan.style.transform = 'translateX(0)';
@@ -97,15 +96,103 @@ const socialIcons = document.querySelectorAll('.social-icon');
     progressBar.style.top = '0';
     progressBar.style.left = '0';
     progressBar.style.height = '4px';
-    progressBar.style.backgroundColor = '#000';
-    progressBar.style.zIndex = '1000';
+    progressBar.style.backgroundColor = 'var(--bs-primary)';
+    progressBar.style.zIndex = '2000';
     progressBar.style.transition = 'width 0.2s ease';
-    sideNav.appendChild(progressBar);
+    document.body.appendChild(progressBar);
 
     window.addEventListener('scroll', () => {
         const scrollTop = window.scrollY;
-        const docHeight = document.body.scrollHeight - window.innerHeight;
+        const docHeight = Math.max(document.body.scrollHeight - window.innerHeight, 1);
         const scrollPercent = (scrollTop / docHeight) * 100;
         progressBar.style.width = `${scrollPercent}%`;
     });
+
+    // Dark mode toggle with system preference fallback
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        const storedPref = localStorage.getItem('dark-mode');
+        const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (storedPref === 'enabled' || (storedPref === null && systemPrefersDark)) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+
+        darkModeToggle.addEventListener('change', () => {
+            const enabled = darkModeToggle.checked;
+            document.body.classList.toggle('dark-mode', enabled);
+            localStorage.setItem('dark-mode', enabled ? 'enabled' : 'disabled');
+        });
+    }
+
+    // GIIS carousel: autoplay, pause on hover, touch swipe
+    const giisCarouselEl = document.querySelector('#giisCarousel');
+    if (giisCarouselEl && window.bootstrap && bootstrap.Carousel) {
+        new bootstrap.Carousel(giisCarouselEl, {
+            interval: 4000,    // auto-switch every 4s
+            ride: 'carousel',  // start automatically
+            pause: 'hover',    // pause when hovered
+            touch: true,       // swipe on touch devices
+            wrap: true
+        });
+    }
+
+    // ===== Chat widget -> backend bridge =====
+    // Avoid double init if this script executes twice
+    if (!window.__chatInited) {
+        window.__chatInited = true;
+
+        const BACKEND_URL = "http://localhost:4000/chat"; // replace with deployed URL when live
+
+        const chatFab   = document.getElementById("chat-fab");
+        const chatBox   = document.getElementById("chatbot");
+        const chatClose = document.getElementById("chat-close");
+        const chatLog   = document.getElementById("chat-log");
+        const chatInput = document.getElementById("chat-input");
+        const chatSend  = document.getElementById("chat-send");
+
+        function append(role, text) {
+            if (!chatLog) return;
+            const div = document.createElement("div");
+            div.innerHTML = `<b>${role}:</b> ${text}`;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        async function askAboutKshitij(message) {
+            const res = await fetch(BACKEND_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            });
+            const data = await res.json();
+            return data.reply || "Sorry, I’m not sure.";
+        }
+
+        async function sendMsg() {
+            const msg = (chatInput?.value || "").trim();
+            if (!msg) return;
+            append("You", msg);
+            if (chatInput) chatInput.value = "";
+            try {
+                const reply = await askAboutKshitij(msg);
+                append("Kshitij", reply);
+            } catch (e) {
+                append("Kshitij", "Hmm, I couldn’t reach the server.");
+            }
+        }
+
+        chatFab?.addEventListener("click", () => {
+            if (chatBox) chatBox.style.display = "block";
+            if (chatFab) chatFab.style.display = "none";
+            chatInput?.focus();
+        });
+        chatClose?.addEventListener("click", () => {
+            if (chatBox) chatBox.style.display = "none";
+            if (chatFab) chatFab.style.display = "flex";
+        });
+        chatSend?.addEventListener("click", sendMsg);
+        chatInput?.addEventListener("keydown", e => { if (e.key === "Enter") sendMsg(); });
+    }
 });
