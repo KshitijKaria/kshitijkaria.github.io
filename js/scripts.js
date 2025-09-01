@@ -143,8 +143,10 @@ const socialIcons = document.querySelectorAll('.social-icon');
     if (!window.__chatInited) {
         window.__chatInited = true;
 
-        // Replace localhost with your Render URL:
-        const BACKEND_URL = "https://kshitijkaria-github-io.onrender.com/chat";
+        // Backend endpoint selection: use Render in prod, localhost in dev
+        const PROD_URL = "https://kshitijkaria-github-io.onrender.com/chat";
+        const DEV_URL  = "http://localhost:4000/chat";
+        const BACKEND_URL = (location.hostname === "localhost" || location.hostname === "127.0.0.1") ? DEV_URL : PROD_URL;
 
         const chatFab   = document.getElementById("chat-fab");
         const chatBox   = document.getElementById("chatbot");
@@ -152,6 +154,20 @@ const socialIcons = document.querySelectorAll('.social-icon');
         const chatLog   = document.getElementById("chat-log");
         const chatInput = document.getElementById("chat-input");
         const chatSend  = document.getElementById("chat-send");
+
+        let typingEl = null;
+        function showTyping() {
+            if (!chatLog) return;
+            typingEl = document.createElement("div");
+            typingEl.className = "chat-typing";
+            typingEl.innerHTML = `<b>Kshitij:</b> <span aria-live="polite">typing…</span>`;
+            chatLog.appendChild(typingEl);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+        function hideTyping() {
+            if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+            typingEl = null;
+        }
 
         function append(role, text) {
             if (!chatLog) return;
@@ -176,22 +192,28 @@ const socialIcons = document.querySelectorAll('.social-icon');
             if (!msg) return;
             append("You", msg);
             if (chatInput) chatInput.value = "";
+            chatSend && (chatSend.disabled = true);
+            showTyping();
             try {
                 const reply = await askAboutKshitij(msg);
+                hideTyping();
                 append("Kshitij", reply);
             } catch (e) {
+                hideTyping();
                 append("Kshitij", "Hmm, I couldn’t reach the server.");
+            } finally {
+                chatSend && (chatSend.disabled = false);
             }
         }
 
         chatFab?.addEventListener("click", () => {
             if (chatBox) chatBox.style.display = "block";
-            if (chatFab) chatFab.style.display = "none";
+            if (chatFab) { chatFab.style.display = "none"; chatFab.classList.remove("glow"); }
             chatInput?.focus();
         });
         chatClose?.addEventListener("click", () => {
             if (chatBox) chatBox.style.display = "none";
-            if (chatFab) chatFab.style.display = "flex";
+            if (chatFab) { chatFab.style.display = "flex"; chatFab.classList.add("glow"); }
         });
         chatSend?.addEventListener("click", sendMsg);
         chatInput?.addEventListener("keydown", e => { if (e.key === "Enter") sendMsg(); });
