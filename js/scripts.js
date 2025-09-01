@@ -177,14 +177,45 @@ const socialIcons = document.querySelectorAll('.social-icon');
             chatLog.scrollTop = chatLog.scrollHeight;
         }
 
+        // Helper: fetch with timeout to avoid hanging requests
+        async function fetchWithTimeout(url, options = {}, timeoutMs = 15000) {
+            const controller = new AbortController();
+            const t = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const res = await fetch(url, { ...options, signal: controller.signal });
+                return res;
+            } finally {
+                clearTimeout(t);
+            }
+        }
+
         async function askAboutKshitij(message) {
-            const res = await fetch(BACKEND_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message })
-            });
-            const data = await res.json();
-            return data.reply || "Sorry, I’m not sure.";
+            try {
+                const res = await fetchWithTimeout(BACKEND_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message })
+                }, 15000);
+
+                if (!res.ok) {
+                    const text = await res.text().catch(() => "");
+                    console.error("Chat backend non-OK:", res.status, text);
+                    throw new Error(`Backend responded ${res.status}`);
+                }
+
+                let data;
+                try {
+                    data = await res.json();
+                } catch (err) {
+                    console.error("Failed to parse JSON:", err);
+                    throw new Error("Invalid JSON from backend");
+                }
+
+                return data.reply || "Sorry, I’m not sure.";
+            } catch (err) {
+                console.error("Chat request failed:", err);
+                throw err; // let caller handle UI (typing indicator, message)
+            }
         }
 
         async function sendMsg() {
