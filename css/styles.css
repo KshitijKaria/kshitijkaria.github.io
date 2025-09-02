@@ -11160,3 +11160,100 @@ body.dark-mode #chat-fab {
   color: #0d6efd; /* Bootstrap primary blue */
   font-weight: 600; /* optional: makes it stand out */
 }
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(270deg, #ff416c, #ff4b2b, #1e90ff, #23d5ab);
+  background-size: 600% 600%;
+  animation: gradient-shift 8s ease infinite;
+  transition: transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
+
+.social-icons a i {
+  font-size: 1.5rem;
+  color: #fff;
+}
+/* Shared gradient animation keyframes (same as chat box gradient) */
+@keyframes gradient-animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Social icons gradient style and animation */
+.social-icons a {
+  /* Gradient colors must match chat box animation */
+  background: linear-gradient(270deg, #ff6ec4, #7873f5, #1fd1f9, #ff6ec4);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-animate 5s ease-in-out infinite;
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-icons a:hover,
+.social-icons a:focus {
+  transform: scale(1.15);
+}
+
+/* === Shared gradient colors pulled from the left panel palette === */
+:root {
+  /* Defaults target Bootstrap primary-based left panel. 
+     If your left panel uses different colors, just change these four stops. */
+  --left-panel-grad-1: var(--bs-primary);
+  --left-panel-grad-2: #0b5ed7; /* slightly darker than primary */
+  --left-panel-grad-3: #0a58ca; /* deeper shade */
+  --left-panel-grad-4: var(--bs-primary);
+}
+
+/* Use the SAME animation as your chat/left panel (keep your existing keyframes) */
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  color: #fff;
+  text-decoration: none;
+
+  /* Mirror the left panel colors via variables above */
+  background: linear-gradient(
+    270deg,
+    var(--left-panel-grad-1),
+    var(--left-panel-grad-2),
+    var(--left-panel-grad-3),
+    var(--left-panel-grad-4)
+  );
+  background-size: 600% 600%;
+  animation: gradient-shift 8s ease infinite; /* or your existing keyframes name */
+  transition: transform 0.3s ease;
+}
+
+.social-icons a:hover { transform: scale(1.15); }
+.social-icons a i { font-size: 1.5rem; color: #fff; }
