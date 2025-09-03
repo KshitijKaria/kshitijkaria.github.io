@@ -11286,31 +11286,3 @@ body.dark-mode #chat-fab {
     z-index: 1;
   }
 }
-
-/* Mobile: ensure navbar is a positioning context */
-@media (max-width: 991.98px){
-  .navbar, .navbar .container-fluid {
-    position: relative !important;
-    padding-right: 3.25rem !important; /* reserve room for hamburger */
-  }
-
-  /* Pin the hamburger (Bootstrap .navbar-toggler) to the far right */
-  .navbar .navbar-toggler{
-    position: absolute !important;
-    right: .5rem !important;
-    top: .5rem !important;
-    z-index: 3 !important;
-  }
-
-  /* Target common IDs/classes/attributes for theme toggles */
-  .navbar .theme-toggle,
-  .navbar [data-theme-toggle],
-  .navbar [id*="theme"],
-  .navbar [id*="dark"]{
-    position: absolute !important;
-    right: 3.25rem !important;   /* sits just to the left of the hamburger */
-    top: .5rem !important;
-    z-index: 2 !important;
-    margin: 0 !important;
-  }
-}
