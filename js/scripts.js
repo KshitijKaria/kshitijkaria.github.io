@@ -57,30 +57,30 @@ window.addEventListener('DOMContentLoaded', event => {
     }, observerOptions);
     sections.forEach(section => observer.observe(section));
 
-responsiveNavItems.forEach(navItem => {
-    if (!navItem.querySelector('span.text-content')) {
-        const textContent = navItem.textContent.trim();
-        navItem.textContent = ''; // Clear original text
-        const textSpan = document.createElement('span');
-        textSpan.className = 'text-content';
-        textSpan.textContent = textContent;
-        navItem.appendChild(textSpan);
-    }
+    responsiveNavItems.forEach(navItem => {
+        if (!navItem.querySelector('span.text-content')) {
+            const textContent = navItem.textContent.trim();
+            navItem.textContent = ''; // Clear original text
+            const textSpan = document.createElement('span');
+            textSpan.className = 'text-content';
+            textSpan.textContent = textContent;
+            navItem.appendChild(textSpan);
+        }
 
-    const textSpan = navItem.querySelector('.text-content');
-    textSpan.style.transition = 'transform 0.3s ease, color 0.3s ease';
-    textSpan.style.display = 'inline-block';
-    navItem.addEventListener('mouseenter', () => {
-        textSpan.style.transform = 'translateX(10px)';
-        textSpan.style.color = 'var(--bs-primary)';
+        const textSpan = navItem.querySelector('.text-content');
+        textSpan.style.transition = 'transform 0.3s ease, color 0.3s ease';
+        textSpan.style.display = 'inline-block';
+        navItem.addEventListener('mouseenter', () => {
+            textSpan.style.transform = 'translateX(10px)';
+            textSpan.style.color = 'var(--bs-primary)';
+        });
+        navItem.addEventListener('mouseleave', () => {
+            textSpan.style.transform = 'translateX(0)';
+            textSpan.style.color = '';
+        });
     });
-    navItem.addEventListener('mouseleave', () => {
-        textSpan.style.transform = 'translateX(0)';
-        textSpan.style.color = '';
-    });
-});
 
-const socialIcons = document.querySelectorAll('.social-icon');
+    const socialIcons = document.querySelectorAll('.social-icon');
     socialIcons.forEach(icon => {
         icon.style.transition = 'transform 0.3s ease';
         icon.addEventListener('mouseenter', () => {
