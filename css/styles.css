@@ -11258,22 +11258,31 @@ body.dark-mode #chat-fab {
 .social-icons a:hover { transform: scale(1.15); }
 .social-icons a i { font-size: 1.5rem; color: #fff; }
 
-/* Prevent dark-mode toggle overlapping the navbar hamburger on mobile */
+/* Mobile: reserve space for hamburger and pin it; toggle sits just to its left */
 @media (max-width: 991.98px){
-  .navbar .container-fluid{
-    display: flex;
-    align-items: center;
+  /* Make the navbar a positioning context and reserve ~3.25rem for the hamburger */
+  .navbar .container-fluid,
+  .navbar {
+    position: relative;
+    padding-right: 3.25rem; /* <= width of toggler (+ a bit of gap) */
   }
-  /* Put the toggle just to the left, hamburger on the far right */
+
+  /* Pin the hamburger to the far right, above other content */
+  .navbar .navbar-toggler{
+    position: absolute;
+    right: .5rem;
+    top: .5rem;
+    z-index: 2;
+  }
+
+  /* Put the theme toggle to the right edge of the content, *before* the reserved area */
+  /* Use all selectors you might be using for the toggle */
   .navbar #theme-toggle,
   .navbar #dark-mode-toggle,
-  .navbar .theme-toggle{
-    order: 1;           /* before the hamburger in the flex row */
-    margin-left: auto;  /* push it to the right side */
-    margin-right: .5rem;/* leave a gap before the hamburger */
-  }
-  .navbar .navbar-toggler{
-    order: 2;           /* comes after the toggle */
+  .navbar .theme-toggle,
+  .navbar [data-theme-toggle]{
+    margin-left: auto;    /* push to the right */
+    position: relative;   /* stay in flow, just not under the toggler */
+    z-index: 1;
   }
 }
-
