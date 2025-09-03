@@ -458,34 +458,5 @@
           <span aria-hidden="true">💬</span>
           <span class="d-none d-sm-inline">Chat with me</span>
         </button>
-        <script>
-(function(){
-  const SELECTOR = '#theme-toggle, #dark-mode-toggle, .theme-toggle'; // adjust if needed
-  const COLLAPSE_SEL = '#navbarSupportedContent, .navbar-collapse';   // common Bootstrap selectors
-
-  function moveToggle(){
-    const toggle = document.querySelector(SELECTOR);
-    const collapse = document.querySelector(COLLAPSE_SEL);
-    const header = document.querySelector('.navbar .container-fluid') || document.querySelector('.navbar');
-
-    if (!toggle || !header) return;
-
-    const isMobile = matchMedia('(max-width: 991.98px)').matches;
-
-    if (isMobile && collapse && !collapse.contains(toggle)) {
-      collapse.appendChild(toggle);               // put inside the menu list
-      toggle.style.margin = '0.5rem 0 0 auto';    // right-align within the menu
-      toggle.style.display = 'inline-flex';
-    } else if (!isMobile && header && !header.contains(toggle)) {
-      header.appendChild(toggle);                 // return to header on desktop
-      toggle.style.margin = '';
-      toggle.style.display = '';
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', moveToggle);
-  window.addEventListener('resize', moveToggle);
-})();
-</script>
     </body>
 </html>
