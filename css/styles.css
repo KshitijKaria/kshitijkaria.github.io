@@ -11286,12 +11286,28 @@ body.dark-mode #chat-fab {
   }
 }
 
+/* Mobile: push in-flow content (incl. theme toggle) below the pinned hamburger */
 @media (max-width: 991.98px){
+  .navbar .container-fluid,
+  .navbar {
+    position: relative;
+    padding-right: 3.25rem;   /* already there, keeps room for hamburger */
+    padding-top: 2.75rem;     /* NEW: moves content below the hamburger */
+  }
+
+  .navbar .navbar-toggler{
+    position: absolute;
+    right: .5rem;
+    top: .5rem;
+    z-index: 3;
+  }
+
   .navbar #theme-toggle,
   .navbar #dark-mode-toggle,
   .navbar .theme-toggle,
   .navbar [data-theme-toggle]{
-    margin-left: auto;
-    margin-top: 2.25rem; /* push the toggle down below the hamburger */
+    margin-left: auto;  /* keep to the right edge */
+    position: relative; /* stays in flow, now starts below due to padding-top */
+    z-index: 2;
   }
 }
