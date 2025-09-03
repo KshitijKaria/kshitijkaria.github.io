@@ -11258,21 +11258,3 @@ body.dark-mode #chat-fab {
 .social-icons a:hover { transform: scale(1.15); }
 .social-icons a i { font-size: 1.5rem; color: #fff; }
 
-/* Prevent dark-mode toggle overlapping the navbar hamburger on mobile */
-@media (max-width: 991.98px){
-  .navbar .container-fluid{
-    display: flex;
-    align-items: center;
-  }
-  /* Put the toggle just to the left, hamburger on the far right */
-  .navbar #theme-toggle,
-  .navbar #dark-mode-toggle,
-  .navbar .theme-toggle{
-    order: 1;           /* before the hamburger in the flex row */
-    margin-left: auto;  /* push it to the right side */
-    margin-right: .5rem;/* leave a gap before the hamburger */
-  }
-  .navbar .navbar-toggler{
-    order: 2;           /* comes after the toggle */
-  }
-}
