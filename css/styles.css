@@ -11281,7 +11281,17 @@ body.dark-mode #chat-fab {
   .navbar [data-theme-toggle]{
     position: absolute;
     right: .5rem;
-    top: 100rem;    /* adjust this value for spacing */
+    top: 3rem;    
     z-index: 1;
+  }
+}
+
+@media (max-width: 991.98px){
+  .navbar #theme-toggle,
+  .navbar #dark-mode-toggle,
+  .navbar .theme-toggle,
+  .navbar [data-theme-toggle]{
+    margin-left: auto;
+    margin-top: 2.25rem; /* push the toggle down below the hamburger */
   }
 }
