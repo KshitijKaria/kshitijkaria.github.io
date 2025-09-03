@@ -11258,30 +11258,29 @@ body.dark-mode #chat-fab {
 .social-icons a:hover { transform: scale(1.15); }
 .social-icons a i { font-size: 1.5rem; color: #fff; }
 
-/* Mobile: reserve space for hamburger and pin it; toggle sits just below */
+/* Mobile: toggle should scroll with the content (not fixed/pinned) */
 @media (max-width: 991.98px){
   .navbar .container-fluid,
   .navbar {
     position: relative;
-    padding-right: 3.25rem; /* reserve space on the right */
+    padding-right: 3.25rem;  /* still keep room for hamburger */
+    padding-top: 0;          /* let content flow naturally */
   }
 
-  /* Hamburger pinned top right */
   .navbar .navbar-toggler{
-    position: absolute;
+    position: absolute;  /* keep hamburger pinned top-right */
     right: .5rem;
-    top: .5rem;   /* top row */
-    z-index: 2;
+    top: .5rem;
+    z-index: 3;
   }
 
-  /* Theme toggle pinned just below the hamburger */
   .navbar #theme-toggle,
   .navbar #dark-mode-toggle,
   .navbar .theme-toggle,
   .navbar [data-theme-toggle]{
-    position: absolute;
-    right: .5rem;
-    top: 3rem;    
-    z-index: 1;
+    position: static;      /* remove pinning so it scrolls with navbar */
+    margin-left: auto;     /* stays pushed to the right in flex row */
+    margin-top: 0.5rem;    /* small spacing below brand/menu if needed */
+    z-index: auto;
   }
 }
