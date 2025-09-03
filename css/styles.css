@@ -11258,31 +11258,30 @@ body.dark-mode #chat-fab {
 .social-icons a:hover { transform: scale(1.15); }
 .social-icons a i { font-size: 1.5rem; color: #fff; }
 
-/* Mobile: reserve space for hamburger and pin it; toggle sits just to its left */
+/* Mobile: reserve space for hamburger and pin it; toggle sits just below */
 @media (max-width: 991.98px){
-  /* Make the navbar a positioning context and reserve ~3.25rem for the hamburger */
   .navbar .container-fluid,
   .navbar {
     position: relative;
-    padding-right: 3.25rem; /* <= width of toggler (+ a bit of gap) */
+    padding-right: 3.25rem; /* reserve space on the right */
   }
 
-  /* Pin the hamburger to the far right, above other content */
+  /* Hamburger pinned top right */
   .navbar .navbar-toggler{
     position: absolute;
     right: .5rem;
-    top: .5rem;
+    top: .5rem;   /* top row */
     z-index: 2;
   }
 
-  /* Put the theme toggle to the right edge of the content, *before* the reserved area */
-  /* Use all selectors you might be using for the toggle */
+  /* Theme toggle pinned just below the hamburger */
   .navbar #theme-toggle,
   .navbar #dark-mode-toggle,
   .navbar .theme-toggle,
   .navbar [data-theme-toggle]{
-    margin-left: auto;    /* push to the right */
-    position: relative;   /* stay in flow, just not under the toggler */
+    position: absolute;
+    right: .5rem;
+    top: 3rem;    /* adjust this value for spacing */
     z-index: 1;
   }
 }
