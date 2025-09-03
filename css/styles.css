@@ -11323,3 +11323,37 @@ body.dark-mode #chat-fab {
     margin-top: .25rem;
   }
 }
+
+/* FINAL mobile override: make theme toggle scroll with content */
+@media (max-width: 991.98px){
+  /* If your navbar/sideNav uses fixed/sticky, unfix on mobile */
+  .fixed-top, .sticky-top, #sideNav.fixed-top, .navbar.fixed-top {
+    position: static !important;
+  }
+
+  /* Kill any fixed/absolute pinning on the toggle & hamburger */
+  .navbar .navbar-toggler,
+  .navbar #theme-toggle,
+  .navbar #dark-mode-toggle,
+  .navbar .theme-toggle,
+  .navbar [data-theme-toggle]{
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+
+  /* Keep the row layout nice: toggle floats to the right in flow */
+  .navbar .container-fluid{
+    display: flex;
+    align-items: center;
+  }
+  .navbar #theme-toggle,
+  .navbar #dark-mode-toggle,
+  .navbar .theme-toggle,
+  .navbar [data-theme-toggle]{
+    margin-left: auto;
+    margin-top: .25rem;
+  }
+}
