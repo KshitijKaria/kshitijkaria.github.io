@@ -11281,7 +11281,7 @@ body.dark-mode #chat-fab {
   .navbar [data-theme-toggle]{
     position: absolute;
     right: .5rem;
-    top: 6rem;    /* adjust this value for spacing */
+    top: 100rem;    /* adjust this value for spacing */
     z-index: 1;
   }
 }
