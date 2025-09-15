@@ -14,13 +14,221 @@
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <style>
+        /* ---- Project cards (monospace, bold headings, pill tags) ---- */
+        .project-card{background:rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.08); border-left:none; border-radius:.75rem; padding:1.25rem; box-shadow:0 6px 18px rgba(0,0,0,.04)}
+        @media (prefers-color-scheme: dark){
+          .project-card{background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.08)}
+        }
+.project-header{display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap}
+.project-title{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight:800; letter-spacing:.02em; margin:0}
+.project-view{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono"; font-size:.9rem}
+.project-meta{margin-left:auto; white-space:nowrap; color:var(--bs-secondary-color)}
+.project-header{ align-items:baseline; }
+.project-header .project-meta{ margin-left:auto; flex: initial; text-align:right; }
+/* Two-line project header: title + date on line 1; subtitle + link on line 2 */
+.project-header .project-subrow{ flex:0 0 100%; display:flex; align-items:baseline; gap:.5rem; }
+.project-subtitle{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight:700; color: var(--bs-secondary-color); }
+.project-sep{ opacity:.6; }
+/* Allow date to wrap to its own line when header is marked as stacked */
+.project-header--stacked .project-meta{ margin-left:0 !important; flex:0 0 100% !important; display:block; width:100%; text-align:right; }
+        .project-pills{display:flex; flex-wrap:wrap; gap:.5rem; margin:.75rem 0 1rem}
+        .project-pill{border:1px solid currentColor; border-radius:.5rem; padding:.15rem .5rem; font-size:.8rem; line-height:1.2; color:var(--bs-secondary-color)}
+        .project-body{margin:0}
+        .project-body li{margin-bottom:.5rem}
+        .project-body li::marker{content:"•  "; font-weight:700}
+        /* ---- Experience cards (same look as project cards) ---- */
+        .exp-card{background:rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.08); border-left:none; border-radius:.75rem; padding:1.25rem; box-shadow:0 6px 18px rgba(0,0,0,.04)}
+        @media (prefers-color-scheme: dark){
+          .exp-card{background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.08)}
+        }
+        .exp-header{display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap}
+        .exp-title{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight:800; letter-spacing:.02em; margin:0}
+        .exp-meta{margin-left:auto; white-space:nowrap; color:var(--bs-secondary-color)}
+        .exp-pills{display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 1rem}
+        .exp-pill{border:1px solid currentColor; border-radius:.5rem; padding:.15rem .5rem; font-size:.8rem; line-height:1.2; color:var(--bs-secondary-color)}
+        /* Company line under role title */
+.exp-org{font-size:1.06rem; font-weight:700; color:var(--bs-secondary-color); margin-top:.15rem}
+        .exp-org a{text-decoration:none}
+        .exp-org a:hover{text-decoration:underline}
+        /* Right-aligned location line under dates */
+        .exp-loc{font-size:.95rem; font-weight:700; color:var(--bs-secondary-color); text-align:right; margin-top:.15rem}
+        /* ---- Education cards (match project/exp look) ---- */
+        .edu-card{background:rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.08); border-left:none; border-radius:.75rem; padding:1.25rem; box-shadow:0 6px 18px rgba(0,0,0,.04)}
+        @media (prefers-color-scheme: dark){
+          .edu-card{background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.08)}
+        }
+        .edu-header{display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap}
+        .edu-title{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight:800; letter-spacing:.02em; margin:0}
+        .edu-meta{margin-left:auto; white-space:nowrap; color:var(--bs-secondary-color)}
+        .edu-sub{margin:.25rem 0 .5rem; color:var(--bs-secondary-color)}
+        .edu-pills{display:flex; flex-wrap:wrap; gap:.5rem; margin:.25rem 0 .75rem}
+        .edu-pill{border:1px solid currentColor; border-radius:.5rem; padding:.15rem .5rem; font-size:.8rem; line-height:1.2; color:var(--bs-secondary-color)}
+        .edu-body{margin:0}
+        .edu-body li{margin-bottom:.35rem}
+        /* ---- About card (match other cards) ---- */
+        .about-card{background:rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.08); border-left:none; border-radius:.75rem; padding:1.5rem; box-shadow:0 6px 18px rgba(0,0,0,.04); margin-bottom:1.5rem}
+        @media (prefers-color-scheme: dark){
+          .about-card{background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.08)}
+        }
+        .about-header{display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap; margin-bottom:.75rem}
+        .about-title{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight:800; letter-spacing:.02em; margin:0}
+        .about-sub{margin:.25rem 0 .75rem; color:var(--bs-secondary-color)}
+        .about-sub{font-size:1.15rem; font-weight:800}
+        .about-contact{font-size:1.05rem; font-weight:700; letter-spacing:.2px}
+        .about-contact i{opacity:.8; margin-right:.35rem}
+        .about-contact a{text-decoration:none}
+        .about-contact a:hover{text-decoration:underline}
+        .about-contact{display:flex; flex-wrap:wrap; gap:.5rem 1rem; align-items:center}
+        .about-contact .contact-item{display:inline-flex; align-items:center; gap:.4rem; line-height:1}
+        .about-contact .contact-item i{font-size:1rem}
+        /* ---- Match section headings to about-title monospace font ---- */
+        .resume-section-content h2 {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+          font-weight: 800;
+          letter-spacing: .02em;
+        }
+        .resume-section-content h2 {
+          border-bottom:1px solid rgba(0,0,0,.08);
+          padding-bottom:.25rem; margin-bottom:1.25rem;
+        }
+        @media (prefers-color-scheme: dark){
+          .resume-section-content h2 { border-bottom-color: rgba(255,255,255,.12); }
+        }
+        /* ---- Match sidebar nav links to monospace heading font ---- */
+        #sideNav .navbar-nav .nav-link {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+          font-weight: 800;
+          letter-spacing: .02em;
+        }
+        #sideNav .nav-link.active { border-left:3px solid #fff; padding-left:.75rem; opacity:1 }
+        #sideNav .nav-link { opacity:.8; transition: opacity .15s ease }
+        #sideNav .nav-link:hover { opacity:1 }
+        /* ---- Rounded corners for static images (match video iframes) ---- */
+        .interests-images img{border-radius:.75rem}
+        .carousel .ratio{border-radius:.75rem; overflow:hidden}
+        .ratio.rounded-3 { box-shadow: 0 6px 18px rgba(0,0,0,.06); }
+
+        /* ---- Card hover micro-interaction ---- */
+        .project-card, .exp-card, .edu-card, .about-card {
+          transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+        .project-card:hover, .exp-card:hover, .edu-card:hover, .about-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 24px rgba(0,0,0,.08);
+        }
+
+        /* ---- Gradient glow borders for cards ---- */
+        .project-card, .exp-card, .edu-card, .about-card, .intr-card { position: relative; isolation: isolate; }
+
+        /* Gradient stroke */
+        .project-card::before, .exp-card::before, .edu-card::before, .about-card::before, .intr-card::before {
+          content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+          background: linear-gradient(135deg, var(--bs-primary), var(--bs-info), var(--bs-success));
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor; mask-composite: exclude; /* show only the border */
+          opacity: .7;
+        }
+
+
+        @media (prefers-color-scheme: dark){
+          .project-card::before, .exp-card::before, .edu-card::before, .about-card::before, .intr-card::before { opacity: .55; }
+          .project-card::after, .exp-card::after, .edu-card::after, .intr-card::after { opacity: .50; }
+        }
+
+        /* ---- Animated gradient BORDER only (override) ---- */
+        .project-card, .exp-card, .edu-card, .about-card, .intr-card { position: relative; isolation: isolate; }
+
+        /* Animated gradient stroke (border ring only) */
+        .project-card::before, .exp-card::before, .edu-card::before, .about-card::before, .intr-card::before {
+          content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 4px; pointer-events: none;
+          background: linear-gradient(135deg, var(--bs-primary), var(--bs-info), var(--bs-success), var(--bs-primary));
+          background-size: 300% 300%;
+          animation: cardBorderFlow 6s ease infinite;
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor; mask-composite: exclude; /* show only the border */
+          opacity: .9;
+        }
+
+        @keyframes cardBorderFlow {
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        /* Border-following glow: 2px outside + 2px inside */
+        .project-card::after, .exp-card::after, .edu-card::after, .intr-card::after {
+          content: "";
+          position: absolute;
+          inset: -2px;                    /* 2px outward spill */
+          border-radius: inherit;
+          pointer-events: none;
+          background: linear-gradient(135deg, var(--bs-primary), var(--bs-info), var(--bs-success), var(--bs-primary));
+          background-size: 300% 300%;
+          animation: cardBorderFlow 6s ease infinite; /* sync with ::before */
+          padding: 2px;                   /* 2px inward band */
+          filter: blur(6px);              /* soft halo */
+          opacity: .45;                   /* subtle by default */
+          /* Mask so the glow hugs the border ring instead of filling the card */
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor; 
+                  mask-composite: exclude;
+          z-index: -1;                    /* sit behind content */
+        }
+        /* Boost glow gently on hover */
+        .project-card:hover::after, .exp-card:hover::after, .edu-card:hover::after, .intr-card:hover::after { opacity: .60; }
+
+        /* Optional: slightly faster on hover */
+        .project-card:hover::before, .exp-card:hover::before, .edu-card:hover::before, .about-card:hover::before, .intr-card:hover::before {
+          animation-duration: 3.5s;
+        }
+
+        @media (prefers-reduced-motion: reduce){
+          .project-card::before, .exp-card::before, .edu-card::before, .about-card::before, .intr-card::before { animation: none; }
+        }
+        /* ---- About card: remove border & disable animated ring/glow ---- */
+        .about-card { border: none !important; }
+        .about-card::before, .about-card::after { content: none !important; }
+
+        /* ---- Mobile tidy-up (≤576px): simplify and de-clutter cards ---- */
+        @media (max-width: 576px){
+          /* Softer borders/glow on mobile so it feels less busy */
+          .project-card::before, .exp-card::before, .edu-card::before, .intr-card::before { padding: 2px; }
+          .project-card::after,  .exp-card::after,  .edu-card::after,  .intr-card::after  { inset:-1px; padding:1px; filter: blur(4px); opacity:.25; }
+
+          /* Card spacing */
+          .project-card, .exp-card, .edu-card, .about-card { padding: 1rem; }
+
+          /* Experience header: stack neatly */
+          .exp-header { flex-direction: column; align-items: flex-start; gap: .25rem; }
+          .exp-title  { font-size: 1.1rem; }
+          .exp-meta   { width: 100%; text-align: left; margin-left: 0; }
+          .exp-loc    { width: 100%; text-align: right; margin-top: 0; font-size: .9rem; }
+          .exp-org    { font-size: .98rem; }
+
+          /* Pills smaller with tighter spacing */
+          .exp-pills, .project-pills, .edu-pills { gap: .4rem; margin: .5rem 0 .75rem; }
+          .exp-pill,  .project-pill,  .edu-pill  { font-size: .75rem; padding: .12rem .45rem; border-radius: .45rem; }
+
+          /* Text: slightly tighter line-height */
+          .exp-card p, .project-card .project-body, .edu-card { line-height: 1.45; }
+
+          /* Projects: put date on its own line below the title (left-aligned) */
+          .project-header .project-meta{ margin-left:0; flex:0 0 100%; display:block; width:100%; text-align:left; }
+          .project-header{ align-items:flex-start; }
+
+          /* Education: date below the title (left-aligned) */
+          .edu-header { align-items: flex-start; }
+          .edu-header .edu-meta { margin-left: 0; flex: 0 0 100%; display: block; width: 100%; text-align: left; }
+        }
+        </style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <span class="d-block d-lg-none">Kshitij Karia</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.png" alt="Kshitij Karia" /></span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpeg" alt="Kshitij Karia" /></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -28,6 +236,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#Projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#volunteering">Volunteering</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
                     <!--<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>-->
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
@@ -44,25 +253,24 @@
             <!-- About-->
             <section class="resume-section" id="about">
                 <div class="resume-section-content">
-                    <h1 class="mb-0">
-                        Kshitij
-                        <span class="text-primary">Karia</span>
-                    </h1>
-                    <div class="subheading mb-5">
-                       Toronto · (437) 262-1764 ·
-                        <a href="mailto:kshitij.karia@mail.utoronto.ca">kshitij.karia@mail.utoronto.ca</a><br><br>
-                        <h3 class="mb-0">
-                            Aspiring
-                            <span class="text-primary">Software Developer</span>
-                        </h3>
+                  <div class="about-card">
+                    <div class="about-header">
+                      <h1 class="about-title mb-0">Kshitij <span class="text-primary">Karia</span></h1>
                     </div>
-                    <p class="lead mb-5">I am a dedicated undergraduate student at the University of Toronto Mississauga, currently pursuing a Bachelor of Science in Computer Science. With a strong academic foundation and a passion for technology, I am committed to advancing my knowledge in computer science and making a meaningful contribution to the field. My coursework, personal projects, and determination to excel in this dynamic discipline make me a promising candidate for future opportunities in software development and technology.</p>
+                    <div class="about-sub">Aspiring <span class="text-primary">Software Developer</span></div>
+                    <div class="about-contact mb-3">
+                      <span class="contact-item"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Toronto</span></span>
+                      <span class="contact-item"><i class="fa-solid fa-phone" aria-hidden="true"></i><a href="tel:+14372621764">(437) 262-1764</a></span>
+                      <span class="contact-item"><i class="fa-solid fa-envelope" aria-hidden="true"></i><a href="mailto:kshitij.karia@mail.utoronto.ca">kshitij.karia@mail.utoronto.ca</a></span>
+                    </div>
+                    <p>I am a dedicated undergraduate student at the University of Toronto Mississauga, currently pursuing a Bachelor of Science in Computer Science. With a strong academic foundation and a passion for technology, I am committed to advancing my knowledge in computer science and making a meaningful contribution to the field. My coursework, personal projects, and determination to excel in this dynamic discipline make me a promising candidate for future opportunities in software development and technology.</p>
                     <div class="social-icons">
                         <a class="social-icon" href="https://in.linkedin.com/in/kshitij-karia-983b00118" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="https://github.com/KshitijKaria" target="_blank"><i class="fab fa-github"></i></a>
                         <a class="social-icon" href="https://www.instagram.com/kshitij_karia/" target="_blank"><i class="fab fa-instagram"></i></a>
                         <a class="social-icon" href="https://www.facebook.com/kshitij.karia/"><i class="fab fa-facebook-f" target="_blank"></i></a>
                     </div>
+                  </div>
                 </div>
             </section>
             <hr class="m-0" />
@@ -70,229 +278,377 @@
             <section class="resume-section" id="experience">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Experience</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Global Investment Immigration Summit </h3>
-                            
-                            <p>Assisted in organizing the Mega Investment Immigration Event, 
-                                wherein leading immigration Firms and professionals from North America, 
-                                Europe, the Middle East and the Southeast East presented investment options 
-                                to Investors and Agents from India. I managed the backend tech platform, 
-                                ensuring flawless presentation and media streaming. </p>
-                            <div class="mt-3">
-                              <!-- Video: full width, responsive -->
-                              <div class="ratio ratio-16x9 mb-3">
-                                <iframe class="w-100 h-100" src="https://www.youtube.com/embed/lt28YK0PmK4" title="GLOBAL INVESTMENT IMMIGRATION SUMMIT PROMO" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                              </div>
-
-                              <!-- Slideshow for event photos -->
-                              <div id="giisCarousel" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover" data-bs-touch="true">
-                                <div class="carousel-indicators">
-                                  <button type="button" data-bs-target="#giisCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                  <button type="button" data-bs-target="#giisCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                  <div class="carousel-item active">
-                                    <div class="ratio ratio-16x9">
-                                      <img src="assets/img/pic-5.jpeg" class="w-100 h-100" style="object-fit: cover;" alt="Event photo 1">
-                                    </div>
-                                  </div>
-                                  <div class="carousel-item">
-                                    <div class="ratio ratio-16x9">
-                                      <img src="assets/img/pic-6.jpeg" class="w-100 h-100" style="object-fit: contain; background: rgba(255,255,255,0.04);" alt="Event photo 2 (portrait)">
-                                    </div>
-                                  </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#giisCarousel" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#giisCarousel" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
+                    <div class="exp-card mb-4">
+                      <div class="exp-header">
+                        <h3 class="exp-title">Algorithmic Trading Intern</h3>
+                        <span class="exp-meta">July 2024 – August 2024</span>
+                      </div>
+                      <div class="exp-org"><a href="https://www.neuraltechsoft.com/" target="_blank">NeuralTechSoft</a></div>
+                      <div class="exp-pills">
+                        <span class="exp-pill">Python</span>
+                        <span class="exp-pill">Java</span>
+                        <span class="exp-pill">AI/ML</span>
+                        <span class="exp-pill">NSE Futures</span>
+                      </div>
+                      <p>Integrated AI‑driven models into futures trading strategies on the National Stock Exchange (NSE), enhancing data‑driven decision‑making. Strengthened expertise in algorithmic trading systems, financial modelling, and AI applications in real‑world market contexts.</p>
+                    </div>
+                    <div class="exp-card mb-4">
+                      <div class="exp-header">
+                        <h3 class="exp-title">Global Investment Immigration Summit</h3>
+                        <span class="exp-meta">September 2023</span>
+                      </div>
+                      <div class="exp-pills">
+                        <span class="exp-pill">Event Ops</span>
+                        <span class="exp-pill">Streaming</span>
+                        <span class="exp-pill">Backend Tech</span>
+                        <span class="exp-pill">Logistics</span>
+                      </div>
+                      <p>Assisted in organizing the Mega Investment Immigration Event, wherein leading immigration Firms and professionals from North America, Europe, the Middle East and the Southeast East presented investment options to Investors and Agents from India. I managed the backend tech platform, ensuring flawless presentation and media streaming.</p>
+                      <div class="mt-3">
+                        <div id="giisCarousel" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover" data-bs-touch="true">
+                          <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#giisCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#giisCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          </div>
+                          <div class="carousel-inner">
+                            <div class="carousel-item active">
+                              <div class="ratio ratio-16x9 rounded-3 overflow-hidden">
+                                <img src="assets/img/pic-5.jpeg" class="w-100 h-100" style="object-fit: cover;" alt="Event photo 1">
                               </div>
                             </div>
+                            <div class="carousel-item">
+                              <div class="ratio ratio-16x9 rounded-3 overflow-hidden">
+                                <img src="assets/img/pic-6.jpeg" class="w-100 h-100" style="object-fit: contain; background: rgba(255,255,255,0.04);" alt="Event photo 2 (portrait)">
+                              </div>
+                            </div>
+                          </div>
+                          <button class="carousel-control-prev" type="button" data-bs-target="#giisCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#giisCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">September 2023</span></div>
+                        <div class="ratio ratio-16x9 mb-3 rounded-3 overflow-hidden">
+                          <iframe class="w-100 h-100" src="https://www.youtube.com/embed/lt28YK0PmK4" title="GLOBAL INVESTMENT IMMIGRATION SUMMIT PROMO" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                      </div>
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Internship at NeuralTechSoft</h3>
-                            <div class="subheading mb-3"><a href="https://www.neuraltechsoft.com/" target="_blank" class="text-primary">Neural Tech Soft</a></div>
-                            <p>I enrolled in an internship with “NeuralTechSoft’, a firm specializing in algorithmic trading. This exposed me to program-based trading and applications of computer algorithms in treasury functions. I created a program using algorithms that calculated the exponential moving stock price and recommended a buy, sell or hold status on a stock or Index. This experience gave me insight into the technicals of the stock market.</p>
-                            
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2021 - December 2021</span></div>
+                    <div class="exp-card mb-4">
+                      <div class="exp-header">
+                        <h3 class="exp-title">Software Development Intern</h3>
+                        <span class="exp-meta">June 2022 – July 2022</span>
+                      </div>
+                      <div class="exp-org">Happy Cow Dairy Co. Pvt. Ltd.</div>
+                      <div class="exp-pills">
+                        <span class="exp-pill">Java</span>
+                        <span class="exp-pill">SQL</span>
+                        <span class="exp-pill">Automation</span>
+                      </div>
+                      <p>Built and deployed a Java application that cut manual data entry from 3 hours to under 30 seconds, saving ~300 staff entries daily across multiple milk collection centers. Automated logistics calculations (time and distance) with backend database integration, achieving a ~95% improvement in operational efficiency.</p>
+                    </div>
+                    <div class="exp-card mb-4">
+                      <div class="exp-header">
+                        <h3 class="exp-title">Software Development Intern</h3>
+                        <span class="exp-meta">October 2021 – December 2021</span>
+                      </div>
+                      <div class="exp-org"><a href="https://www.neuraltechsoft.com/" target="_blank">NeuralTechSoft</a></div>
+                      <div class="exp-pills">
+                        <span class="exp-pill">Java</span>
+                        <span class="exp-pill">Python</span>
+                        <span class="exp-pill">EMA</span>
+                      </div>
+                      <p>Built a Java‑based program for exponential moving average (EMA) stock price analysis, generating automated buy/sell/hold signals using historical datasets. Gained exposure to treasury functions, trading systems, and risk analysis while applying data‑driven approaches to real‑world financial markets.</p>
                     </div>
                     
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Intern</h3>
-                            <div class="subheading mb-3"><a href="https://moowing.in/" target="_blank" class="text-primary">Moowing</a></div>
-                            <p>I automated Moowing's business system by creating an app where all one had to do was input the travel route, and the requisite data would get populated from
-                                a backend database reducing the task time from three hours to a few seconds. I learned how software applications could significantly improve business
-                                efficiency, leading to higher profitability.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"> April 2022 and June 2022</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Udemy Certification</h3>
-                            <p>I have received certification in Java and Python through online courses on Udemy. I have created applications like calculators, mp3 players, random
-                                password generators, timers, loan and interest rate calculators, etc. This provided me with core concepts of programming and helped me to build real-life
-                                problem-solving applications as well.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2018 - March 2021</span></div>
-                    </div>
-                    
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Member of Oberoi Woods Sports Committee (Bidding Program)</h3>
-                            <p>I was an active member of the bidding and strategy committee for auctioning of players for a cricket tournament. I developed an algorithm using Java and
-                                apache.poi.xsff libraries to optimize the bidding price for the players based on their skill sets and record so as to create the best team within the given
-                                budget.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2023</span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Maths and Physics Club</h3>
-                            
-                            <p>I was a part of my school's Maths and Physics club, where I explore mathematical and Physics principles and paradoxes in depth. It has allowed me to
-                                expand my knowledge and have a strong foundation in Maths and Physics on topics like calculus, mechanics, complex numbers, functions and derivation
-                                of complex formulae.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">November 2022 - March 2023 </span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Coding Club</h3>
-                            <p>I was part of the coding club in our school, where I learned about computer vision and programmed several apps like face detection and smile detection in
-                                python through the use of open cv2 and haar cascade files in Visual Studio Code. This experience enhanced my programming skills in python, especially in
-                                computer vision.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2021 - December 2021</span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Volunteering Service with Ashray Akruti Foundation</h3>
-                            <p>I also conducted a Diwali sale with my community this year. I sold diyas made by the specially-abled youth of the Ashray Akruti Foundation and raised
-                                around $200 within the span of just one week. I personally went and delivered all orders to every customer's house. I learned to empathize with specially-
-                                abled youth and be more compassionate.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">November 2022</span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Implementation of Home Automation System</h3>
-                            <p>I implemented a home automation system in 2019 by researching and sourcing various components at the cheapest cost from Alibaba Express and
-                                integrating them for just $350 as opposed to the $1000 quoted by the technician. This experience improved my research skills and ignited further interest
-                                in technology and automation.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">May 2019</span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">School Soccer Team</h3>
-                            <p>I was part of the school soccer team. We practiced relentlessly for interschool matches against various schools all across Mumbai.
-                                It focused on possession-style gameplay, which involved all team members, and it improved my soccer skills(passing, shooting, dribbling, defending, etc.)
-                                as well as teamwork and collaborative skills.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">June 2016 - December 2021</span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Member of Oberoi Woods Sports Committee</h3>
-                            <p>I played an active role in organizing our community's annual sports events. I was responsible for scheduling the event, pairing the players, team
-                                formation, logistics, and venue booking. I ensured all events were completed as per the schedule. I realized that coordination, communication, and
-                                supervision play key roles in any organizational activity</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">April 2019 - May 2021</span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Hosted Digital Empowerment Drive</h3>
-                            <p>During Covid, I organized a digital empowerment drive to enable people to adapt to the digital world. I conducted workshops in our community hall for
-                                the elderly, the support staff, and domestic help. I assisted them in buying smartphones, installing and using digital shopping, healthcare and payment
-                                apps, and also saving money via online discounts</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2021</span></div>
-                    </div>
                 </div>
             </section>
             <section class="resume-section" id="Projects">
                 <div class="resume-section-content">
                     <h2 class="mb-1">Projects</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-                        <div class="flex-grow-1">
-                            
-                      
-                            <!-- <p>Responsibilities - Gathered requirements from Stakeholders, Managed documentation through JIRA and Wiki, commumnicated the timelines and technical aspect of maintaining the web standard, adhering to SEO and Web accessibility guidelines</p> -->
-                            <p> <h5 class="mb-0">
-                                Python 
-                                <span class="text-primary">Projects</span><br/>
-                            </h5>
-                                <ul>
-                                    <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/Calculator.py" target="_blank">Calculator</a></li>
-                                    <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/Currency.py" target="_blank">Currency Converter</a></li>
-                                    <li><a href="https://github.com/KshitijKaria/Python-Projects/tree/main/mp3" target="_blank">MP3 Player</a></li>
-                                    <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/Tip.py" target="_blank">Tip Calculator</a></li>
-                                    <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/loancalculator.py" target="_blank">Loan Calculator</a></li>
-                                </ul></p>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">Wellthify — AI Powered Health & Wellness Ecosystem</h3>
+                        <span class="project-meta">Mar 2025</span>
+                        <div class="project-subrow">
+                          <span class="project-subtitle">(GenAI Genesis Hackathon)</span>
+                          <span class="project-sep">•</span>
+                          <a href="https://devpost.com/software/wellthify" target="_blank" class="project-view text-decoration-none">[View Project]</a>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">April 2019</span></div>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">React</span>
+                        <span class="project-pill">Blender</span>
+                        <span class="project-pill">3D Animation</span>
+                        <span class="project-pill">Rhubarb Lip Sync</span>
+                        <span class="project-pill">Google Gemini</span>
+                        <span class="project-pill">Google Cloud TTS</span>
+                        <span class="project-pill">Pose Detection</span>
+                        <span class="project-pill">Hackathon</span>
+                      </div>
+                      <ul class="project-body">
+                        <li>Designed and developed a React‑based wellness app at Canada’s Largest AI Hackathon, GenAI Genesis, focused on personalized fitness and therapy experiences.</li>
+                        <li>Built and animated 3D character models in Blender with custom animations and integrated Rhubarb Lip Sync for realistic facial expressions.</li>
+                        <li>Integrated Google Gemini AI to power conversational therapy and personalized fitness/diet recommendations.</li>
+                        <li>Connected Google Cloud Text‑to‑Speech for natural voice synthesis, giving the 3D trainer and therapist lifelike interaction.</li>
+                        <li>Implemented pose detection to analyze user exercises in real time, enabling the virtual fitness coach to provide corrective feedback and encouragement.</li>
+                        <li>Combined AI‑driven dialogue, real‑time 3D rendering, and motion tracking into an interactive system for both physical and mental wellness.</li>
+                      </ul>
+                      <div class="ratio ratio-16x9 rounded-3 overflow-hidden mt-3">
+                        <iframe src="https://www.youtube.com/embed/FagtUz-Is5s" title="Wellthing — AI Powered Health & Wellness Ecosystem" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                      </div>
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-                        <div class="flex-grow-1">
-                            
-                      
-                            <!-- <p>Responsibilities - Gathered requirements from Stakeholders, Managed documentation through JIRA and Wiki, commumnicated the timelines and technical aspect of maintaining the web standard, adhering to SEO and Web accessibility guidelines</p> -->
-                            <p> <h5 class="mb-0">
-                                Java 
-                                <span class="text-primary">Project</span><br/>
-                            </h5>
-                                <ul>
-                                    <li><a href="https://github.com/KshitijKaria/Logistics-Automation-Java-Project" target="_blank">Logistics Automater Program developed at Moowing Internship</a></li>
-                                    
-                                </ul></p>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">IoT‑Based Plant Monitoring</h3>
+                        <span class="project-meta">Mar 2025</span>
+                        <div class="project-subrow">
+                          <span class="project-subtitle">(ESP32)</span>
+                          <span class="project-sep">•</span>
+                          <a href="https://devpost.com/software/plant-monitoring-system" target="_blank" class="project-view text-decoration-none">[View Project]</a>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">April 2019</span></div>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">ESP32</span>
+                        <span class="project-pill">C/C++</span>
+                        <span class="project-pill">DHT11</span>
+                        <span class="project-pill">Capacitive Moisture</span>
+                        <span class="project-pill">HTML/CSS/JS</span>
+                        <span class="project-pill">Wi‑Fi Server</span>
+                        <span class="project-pill">TFT LCD</span>
+                        <span class="project-pill">Email Alerts</span>
+                      </div>
+                      <ul class="project-body">
+                        <li>Designed and built an ESP32 system tracking temperature, humidity, and soil moisture in real time.</li>
+                        <li>Integrated DHT11 and capacitive probes for reliable data capture.</li>
+                        <li>Developed a web dashboard (HTML/CSS/JS) with live moisture bar, history, themes, and CSV download.</li>
+                        <li>Enabled remote monitoring via an ESP32‑hosted Wi‑Fi server; added a TFT display for local feedback.</li>
+                        <li>Implemented automated email alerts when moisture falls below threshold.</li>
+                        <li>Focused on modular design and usability for scalable plant‑care automation.</li>
+                      </ul>
+                      <div class="ratio ratio-16x9 rounded-3 overflow-hidden mt-3">
+                        <iframe src="https://www.youtube.com/embed/COK1YRcoy2E" title="IoT-Based Plant Monitoring System Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                      </div>
+                    </div>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">Custom Portfolio Shell (C)</h3>
+                        <span class="project-meta">Jan 2025 – Apr 2025</span>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">C</span>
+                        <span class="project-pill">POSIX</span>
+                        <span class="project-pill">Pipes & Redirection</span>
+                        <span class="project-pill">Sockets</span>
+                        <span class="project-pill">Signals</span>
+                        <span class="project-pill">Linux</span>
+                        <span class="project-pill">GDB / Valgrind</span>
+                      </div>
+                      <ul class="project-body">
+                        <li>Built a UNIX‑like shell supporting built‑ins (<code>cd</code>, <code>exit</code>), external programs, and multi‑argument parsing.</li>
+                        <li>Implemented a custom parser for multiple commands per line with robust tokenization.</li>
+                        <li>Added background jobs (<code>&amp;</code>), process tracking (<code>ps</code>), and signal‑based termination (<code>kill</code>).</li>
+                        <li>Engineered pipelines and I/O redirection to compose complex workflows.</li>
+                        <li>Used dynamic arrays and linked lists to manage variables and job tables.</li>
+                        <li>Integrated socket‑based messaging so multiple clients can connect and chat inside the shell.</li>
+                        <li>Hardened memory safety with Valgrind + GDB; no leaks in integration tests.</li>
+                      </ul>
+                    </div>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">AI‑Based Paint App in Java</h3>
+                        <span class="project-meta">Sep 2024 – Dec 2024</span>
+                        <div class="project-subrow">
+                          <span class="project-subtitle">University of Toronto Mississauga</span>
+                        </div>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">Java</span>
+                        <span class="project-pill">JavaFX</span>
+                        <span class="project-pill">MVC</span>
+                        <span class="project-pill">Design Patterns</span>
+                        <span class="project-pill">Ollama API</span>
+                      </div>
+                      <ul class="project-body">
+                        <li>Designed and developed a Java‑based interactive paint application featuring shape creation, manipulation, advanced tools, and dynamic undo/redo using the Command Pattern.</li>
+                        <li>Built a clean MVC architecture with Factory, Observer, Strategy, and Builder patterns for modularity and maintainability.</li>
+                        <li>Integrated the Ollama API to generate drawable content from text descriptions; created a custom paint file format with a finite state machine parser.</li>
+                        <li>Supported export in PNG and custom formats.</li>
+                        <li>Collaborated in a Scrum‑based team with Git for version control.</li>
+                        <li>Strengthened expertise in design patterns, JavaFX GUI development, and system design.</li>
+                      </ul>
+                    </div>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">Othello Game in Java</h3>
+                        <span class="project-meta">Sep 2024 – Dec 2024</span>
+                        <div class="project-subrow">
+                          <span class="project-subtitle">University of Toronto Mississauga</span>
+                        </div>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">Java</span>
+                        <span class="project-pill">OOP</span>
+                        <span class="project-pill">JUnit</span>
+                        <span class="project-pill">Strategy</span>
+                        <span class="project-pill">Maven</span>
+                      </div>
+                      <ul class="project-body">
+                        <li>Developed a two‑player Othello game with Human vs Human and Human vs Computer modes.</li>
+                        <li>Implemented Greedy and Random AI strategies and analyzed performance.</li>
+                        <li>Applied OOP principles like inheritance, abstraction, and interfaces.</li>
+                        <li>Implemented robust game logic with move validation and board evaluation, backed by JUnit test coverage.</li>
+                        <li>Used Git and Maven for version control and builds.</li>
+                        <li>Strengthened expertise in strategy design, TDD, and best practices.</li>
+                      </ul>
+                    </div>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">MewbileTech Phone Company</h3>
+                        <span class="project-meta">Jan 2024 – Apr 2024</span>
+                        <div class="project-subrow">
+                          <span class="project-subtitle">University of Toronto Mississauga</span>
+                        </div>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">Python</span>
+                        <span class="project-pill">OOP</span>
+                        <span class="project-pill">PyGame</span>
+                        <span class="project-pill">JSON</span>
+                      </div>
+                      <ul class="project-body">
+                        <li>Built a Python‑based telecom billing system managing customers, contracts, and call records.</li>
+                        <li>Designed OOP architecture supporting multiple subscription types with contract‑specific billing logic.</li>
+                        <li>Implemented call tracking and filtering by duration, location, and customer ID.</li>
+                        <li>Integrated JSON for storage and PyGame to visualize activity on a Toronto map.</li>
+                        <li>Strengthened skills in OOP, data structures, and abstraction.</li>
+                      </ul>
+                    </div>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">Treemap Visualizer in Python</h3>
+                        <span class="project-meta">Jan 2024 – Apr 2024</span>
+                        <div class="project-subrow">
+                          <span class="project-subtitle">University of Toronto Mississauga</span>
+                        </div>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">Python</span>
+                        <span class="project-pill">OOP</span>
+                        <span class="project-pill">Recursion</span>
+                        <span class="project-pill">PyGame</span>
+                      </div>
+                      <ul class="project-body">
+                        <li>Developed an interactive treemap visualizer to represent hierarchical data.</li>
+                        <li>Implemented recursive algorithms to partition data into proportional rectangles dynamically.</li>
+                        <li>Built a responsive GUI with PyGame for data exploration.</li>
+                        <li>Focused on modular and extensible design.</li>
+                        <li>Strengthened skills in OOP, recursion, and GUI development.</li>
+                      </ul>
+                    </div>
+                    <div class="project-card mb-4">
+                      <div class="project-header">
+                        <h3 class="project-title">Python Projects</h3>
+                        <span class="project-meta">April 2019</span>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">Python</span>
+                        <span class="project-pill">Tkinter</span>
+                        <span class="project-pill">CLI</span>
+                      </div>
+                      <ul class="project-body">
+                        <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/Calculator.py" target="_blank">Calculator</a></li>
+                        <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/Currency.py" target="_blank">Currency Converter</a></li>
+                        <li><a href="https://github.com/KshitijKaria/Python-Projects/tree/main/mp3" target="_blank">MP3 Player</a></li>
+                        <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/Tip.py" target="_blank">Tip Calculator</a></li>
+                        <li><a href="https://github.com/KshitijKaria/Python-Projects/blob/main/loancalculator.py" target="_blank">Loan Calculator</a></li>
+                      </ul>
+                    </div>
+                    <div class="project-card mb-2">
+                      <div class="project-header">
+                        <h3 class="project-title">Java Project</h3>
+                        <span class="project-meta">April 2019</span>
+                      </div>
+                      <div class="project-pills">
+                        <span class="project-pill">Java</span>
+                        <span class="project-pill">Automation</span>
+                      </div>
+                      <ul class="project-body">
+                        <li><a href="https://github.com/KshitijKaria/Logistics-Automation-Java-Project" target="_blank">Logistics Automater Program (Internship)</a></li>
+                      </ul>
                     </div>
                     
                 </div>
+            </section>
+            <section class="resume-section" id="volunteering">
+              <div class="resume-section-content">
+                <h2 class="mb-5">Volunteering</h2>
+                <div class="exp-card mb-4">
+                  <div class="exp-header">
+                    <h3 class="exp-title">Volunteering</h3>
+                    <span class="exp-meta">November 2022</span>
+                  </div>
+                  <div class="exp-org">Ashray Akruti Foundation</div>
+                  <div class="exp-pills">
+                    <span class="exp-pill">Fundraising</span>
+                    <span class="exp-pill">Social Impact</span>
+                    <span class="exp-pill">Community</span>
+                  </div>
+                  <p>I also conducted a Diwali sale with my community this year. I sold diyas made by the specially-abled youth of the Ashray Akruti Foundation and raised around $200 within the span of just one week. I personally went and delivered all orders to every customer's house. I learned to empathize with specially-abled youth and be more compassionate.</p>
+                </div>
+                <div class="exp-card mb-2">
+                  <div class="exp-header">
+                    <h3 class="exp-title">Hosted Digital Empowerment Drive</h3>
+                    <span class="exp-meta">October 2021</span>
+                  </div>
+                  <div class="exp-pills">
+                    <span class="exp-pill">Workshops</span>
+                    <span class="exp-pill">Digital Literacy</span>
+                  </div>
+                  <p>During Covid, I organized a digital empowerment drive to enable people to adapt to the digital world. I conducted workshops in our community hall for the elderly, the support staff, and domestic help. I assisted them in buying smartphones, installing and using digital shopping, healthcare and payment apps, and also saving money via online discounts</p>
+                </div>
+              </div>
             </section>
             <hr class="m-0" />
             <!-- Education-->
             <section class="resume-section" id="education">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">University of Toronto - Mississauga</h3>
-                            <div class="subheading mb-1">Bachelors of Science </div>
-                            <div>Computer Science</div>
-                            <p></p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">September 2023 - May 2027</span></div>
+                    <div class="edu-card mb-4">
+                      <div class="edu-header">
+                        <h3 class="edu-title">University of Toronto – Mississauga</h3>
+                        <span class="edu-meta">September 2023 – May 2027</span>
+                      </div>
+                      <div class="edu-sub">Bachelors of Science — Computer Science</div>
+                      <div class="edu-pills">
+                        <span class="edu-pill">B.Sc.</span>
+                        <span class="edu-pill">Computer Science</span>
+                        <span class="edu-pill">UTM</span>
+                      </div>
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Oberoi International School</h3>
-                            <div class="subheading mb-1">IB Diploma Program</div>
-                            <div></div>
-                            <p>IB score: 35/45</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2021 - May 2023</span></div>
-                    </div><br>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Vibgor High School</h3>
-                            <div class="subheading mb-1">Indian Certificate of Secondary Education</div>
-                            <div></div>
-                            <p>Final Score: 96.4%</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2021 - May 2023</span></div>
+                    <div class="edu-card mb-4">
+                      <div class="edu-header">
+                        <h3 class="edu-title">Oberoi International School</h3>
+                        <span class="edu-meta">August 2021 – May 2023</span>
+                      </div>
+                      <div class="edu-sub">IB Diploma Programme</div>
+                      <div class="edu-pills">
+                        <span class="edu-pill">IBDP</span>
+                        <span class="edu-pill">Score: 35/45</span>
+                      </div>
+                    </div>
+                    <div class="edu-card mb-2">
+                      <div class="edu-header">
+                        <h3 class="edu-title">Vibgor High School</h3>
+                        <span class="edu-meta">—</span>
+                      </div>
+                      <div class="edu-sub">Indian Certificate of Secondary Education</div>
+                      <div class="edu-pills">
+                        <span class="edu-pill">ICSE</span>
+                        <span class="edu-pill">Final Score: 96.4%</span>
+                      </div>
                     </div>
                 </div>
             </section>
@@ -394,44 +750,41 @@
             <section class="resume-section" id="awards">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Awards</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Selected for Academic Excellence Program in Grade 10
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                           <a href="https://github.com/KshitijKaria/AlgoTrading-Research-Paper">Research paper on Algorithmic Trading</a>
-                        </li>
-                        
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - Part of the winning Cricket team in 2017 & 2018
-                        </li>
-
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - Part of the winning Football team in 2017, 2018 & 2020
-                        </li>
-
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Winner of the Table Tennis tournament in 2017 and Runner up in 2018
-                        </li>
-
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Winner of Chess tournaments in 2017 and 2018
-                        </li>
-
-                        
-                        
-                       
-                    </ul>
+                    <div class="edu-card mb-4">
+                      <div class="edu-header">
+                        <h3 class="edu-title">Research Paper — Algorithmic Trading</h3>
+                      </div>
+                      <div class="edu-pills">
+                        <span class="edu-pill">Research</span>
+                        <span class="edu-pill">Finance</span>
+                      </div>
+                      <p><a href="https://github.com/KshitijKaria/AlgoTrading-Research-Paper" target="_blank">Published research on Algorithmic Trading</a>.</p>
+                    </div>
+                    <div class="edu-card mb-4">
+                      <div class="edu-header">
+                        <h3 class="edu-title">Dean's List Scholar</h3>
+                        <span class="edu-meta">Oct 2024</span>
+                      </div>
+                      <div class="edu-sub">University of Toronto Mississauga</div>
+                      <div class="edu-pills">
+                        <span class="edu-pill">Academic Excellence</span>
+                        <span class="edu-pill">Recognition</span>
+                      </div>
+                      <p>Awarded Dean's List Scholar by University of Toronto.</p>
+                    </div>
+                    <div class="edu-card mb-4">
+                      <div class="edu-header">
+                        <h3 class="edu-title">Entrance Scholarship</h3>
+                        <span class="edu-meta">Apr 2023</span>
+                      </div>
+                      <div class="edu-sub">University of Toronto Mississauga</div>
+                      <div class="edu-pills">
+                        <span class="edu-pill">Scholarship</span>
+                        <span class="edu-pill">Computer Science</span>
+                        <span class="edu-pill">Math & Statistics</span>
+                      </div>
+                      <p>Entrance Scholarship recipient for studies in Computer Science, Mathematics & Statistics at the University of Toronto.</p>
+                    </div>
                 </div>
             </section>
         </div>
