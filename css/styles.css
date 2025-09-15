@@ -11287,3 +11287,49 @@ body.dark-mode #chat-fab {
   }
 }
 
+/* ---- Animated gradient BORDER only (override) ---- */
+.project-card, .exp-card, .edu-card, .about-card, .intr-card { 
+  position: relative; 
+  isolation: isolate; 
+}
+
+/* Remove outer glow from previous implementation */
+.project-card::after, .exp-card::after, .edu-card::after, .about-card::after, .intr-card::after { 
+  content: none !important; 
+}
+
+/* Animated gradient stroke using masking so only the border shows */
+.project-card::before, .exp-card::before, .edu-card::before, .about-card::before, .intr-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 4px;                /* border thickness */
+  pointer-events: none;
+  background: linear-gradient(135deg, var(--bs-primary), var(--bs-info), var(--bs-success), var(--bs-primary));
+  background-size: 300% 300%;
+  animation: cardBorderFlow 6s ease infinite;
+  /* Show only the border ring, not the fill */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: .9;
+}
+
+@keyframes cardBorderFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Optional: speed up animation on hover */
+.project-card:hover::before, .exp-card:hover::before, .edu-card:hover::before, .about-card:hover::before, .intr-card:hover::before {
+  animation-duration: 3.5s;
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .project-card::before, .exp-card::before, .edu-card::before, .about-card::before, .intr-card::before { 
+    animation: none; 
+  }
+}
