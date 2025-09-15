@@ -104,6 +104,14 @@
         #sideNav .nav-link.active { border-left:3px solid #fff; padding-left:.75rem; opacity:1 }
         #sideNav .nav-link { opacity:.8; transition: opacity .15s ease }
         #sideNav .nav-link:hover { opacity:1 }
+        /* Keep nav link text white on hover */
+        #sideNav .nav-link:hover .text-content,
+        #sideNav .nav-link:focus .text-content {
+          color: #fff !important;
+        }
+        /* Ensure hash navigation lands below fixed sidenav & smooth scroll */
+        .resume-section { scroll-margin-top: 110px; }
+        html { scroll-behavior: smooth; }
         /* ---- Rounded corners for static images (match video iframes) ---- */
         .interests-images img{border-radius:.75rem}
         .carousel .ratio{border-radius:.75rem; overflow:hidden}
@@ -221,9 +229,20 @@
           .edu-header { align-items: flex-start; }
           .edu-header .edu-meta { margin-left: 0; flex: 0 0 100%; display: block; width: 100%; text-align: left; }
         }
+        /* ===== Force Dark Mode (default) + variable overrides ===== */
+        html.force-dark {
+          /* Core surface & text */
+          --bs-body-bg: #0b0f19;
+          --bs-body-color: #e6e9f0;
+          --bs-secondary-color: rgba(255,255,255,.65);
+          --bs-border-color: rgba(255,255,255,.12);
+        }
+
+        /* Apply variables to body for immediate effect */
+        body { background-color: var(--bs-body-bg); color: var(--bs-body-color); }
         </style>
     </head>
-    <body id="page-top">
+    <body id="page-top" tabindex="0">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
@@ -811,5 +830,49 @@
           <span aria-hidden="true">💬</span>
           <span class="d-none d-sm-inline">Chat with me</span>
         </button>
+        <script>
+          // Robust active-state highlighting using IntersectionObserver
+          document.addEventListener('DOMContentLoaded', function () {
+            const links = Array.from(document.querySelectorAll('#sideNav .nav-link'));
+            const setActive = (id) => {
+              links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+            };
+
+            // Immediate highlight on click to avoid flicker
+            links.forEach(a => a.addEventListener('click', () => setActive(a.getAttribute('href').slice(1))));
+
+            // Highlight the section centered in the viewport
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); });
+            }, { root: null, rootMargin: '-35% 0px -60% 0px', threshold: 0 });
+
+            document.querySelectorAll('section.resume-section').forEach(sec => observer.observe(sec));
+
+            // Set initial active based on hash or first section
+            const init = location.hash ? location.hash.slice(1) : (document.querySelector('section.resume-section')?.id || 'about');
+            setActive(init);
+          });
+        </script>
+        <script>
+          // Default to Dark Mode (with persistence & toggle sync)
+          (function(){
+            const STORAGE_KEY = 'theme';
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const defaultDark = true; // make dark the default
+            const isDark = saved ? (saved === 'dark') : defaultDark;
+
+            document.documentElement.classList.toggle('force-dark', isDark);
+
+            const toggle = document.getElementById('darkModeToggle');
+            if (toggle) {
+              toggle.checked = isDark;
+              toggle.addEventListener('change', function(){
+                const on = this.checked;
+                document.documentElement.classList.toggle('force-dark', on);
+                localStorage.setItem(STORAGE_KEY, on ? 'dark' : 'light');
+              });
+            }
+          })();
+        </script>
     </body>
 </html>
