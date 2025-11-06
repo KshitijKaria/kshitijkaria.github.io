@@ -1,15 +1,21 @@
+// server.js
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 
+// NOTE: Node 18+ has global fetch. On Node <18: `npm i node-fetch` then:
+// const fetch = (...args) => import('node-fetch').then(({default: f}) => f(...args));
+
 if (!process.env.GEMINI_API_KEY) {
   console.warn("[WARN] GEMINI_API_KEY is missing. Set it in your .env file.");
 }
 
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash"; // 👈 updated default
+
 const app = express();
-app.use(cors());          // Allow frontend (your portfolio) to call the backend
-app.use(express.json());  // Parse JSON requests
+app.use(cors());
+app.use(express.json());
 
 const PROFILE = `
 Name: Kshitij Karia
@@ -39,12 +45,12 @@ Highlights & Experience:
 - Interests: Software engineering, fintech & algorithmic trading, AI-driven applications, real-time systems, immersive AI integrations (voice, 3D, pose detection), data-driven decision systems.
 `;
 
-const SYSTEM_PROMPT = `You are Kshitij Karia (use first‑person). Answer questions about your background using PROFILE.
+const SYSTEM_PROMPT = `You are Kshitij Karia (use first-person). Answer questions about your background using PROFILE.
 • Be concise (2–5 sentences) unless the user asks for more detail.
 • If something isn’t in PROFILE, say you’re not sure or summarize at a high level.
 • For contact, point to the email on the site.
 • Keep a friendly, professional tone; avoid sharing private/confidential details.
-• When relevant, highlight recent projects (Virtual 3D AI Therapist, Virtual Fitness Coach with pose detection & lip‑sync, C shell/socket programs) and key skills (Java, Python, C, React, Node, Three.js, Google Cloud TTS, Gemini API).
+• When relevant, highlight recent projects (Virtual 3D AI Therapist, Virtual Fitness Coach with pose detection & lip-sync, C shell/socket programs) and key skills (Java, Python, C, React, Node, Three.js, Google Cloud TTS, Gemini API).
 `;
 
 // Chat endpoint
@@ -52,27 +58,47 @@ app.post("/chat", async (req, res) => {
   try {
     const userMessage = (req.body?.message || "").toString().slice(0, 2000);
 
-    const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { role: "system", parts: [{ text: `${SYSTEM_PROMPT}\n\nPROFILE:\n${PROFILE}` }] },
-          generationConfig: { temperature: 0.6, topP: 0.9 },
-          contents: [
-            // Few-shot examples to steer answers
-            { role: "user", parts: [{ text: "What internships have you done?" }] },
-            { role: "model", parts: [{ text: "I completed two internships: at NeuralTechSoft I built a Java EMA‑based stock analysis tool and explored AI‑driven trading; at Moowing I created a Java Swing GUI to help automate dairy workflows." }] },
-            { role: "user", parts: [{ text: "What are your main skills?" }] },
-            { role: "model", parts: [{ text: "I mainly work with Java and Python. I’ve also used RISC‑V assembly for a Sokoban puzzle, plus JavaScript/Bootstrap for web, and I’m interested in AI/ML and fintech algorithms." }] },
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+      GEMINI_MODEL
+    )}:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
-            // The actual user question
-            { role: "user", parts: [{ text: userMessage }] }
-          ]
-        })
-      }
-    );
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        system_instruction: {
+          role: "system",
+          parts: [{ text: `${SYSTEM_PROMPT}\n\nPROFILE:\n${PROFILE}` }],
+        },
+        generationConfig: { temperature: 0.6, topP: 0.9 },
+        contents: [
+          // Few-shot examples to steer answers
+          { role: "user", parts: [{ text: "What internships have you done?" }] },
+          {
+            role: "model",
+            parts: [
+              {
+                text:
+                  "I completed two internships: at NeuralTechSoft I built a Java EMA-based stock analysis tool and explored AI-driven trading; at Moowing I created a Java Swing GUI to help automate dairy workflows.",
+              },
+            ],
+          },
+          { role: "user", parts: [{ text: "What are your main skills?" }] },
+          {
+            role: "model",
+            parts: [
+              {
+                text:
+                  "I mainly work with Java and Python. I’ve also used RISC-V assembly for a Sokoban puzzle, plus JavaScript/Bootstrap for web, and I’m interested in AI/ML and fintech algorithms.",
+              },
+            ],
+          },
+
+          // Actual user message
+          { role: "user", parts: [{ text: userMessage }] },
+        ],
+      }),
+    });
 
     if (!resp.ok) {
       const errText = await resp.text();
@@ -82,17 +108,21 @@ app.post("/chat", async (req, res) => {
 
     const data = await resp.json();
     const parts = data?.candidates?.[0]?.content?.parts || [];
-    const text = parts.map(p => p.text).filter(Boolean).join("\n");
+    const text = parts.map((p) => p.text).filter(Boolean).join("\n");
     const reply = text || "Sorry, I don’t know.";
-    return res.json({ reply });
+    return res.json({ reply, model: GEMINI_MODEL }); // include model for quick debugging
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ reply: "Error contacting Gemini API" });
   }
 });
 
-// Start server
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Chatbot backend running on port ${PORT}`);
-});
+// Start server (export app for tests)
+if (require.main === module) {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Chatbot backend running on port ${PORT} (model: ${GEMINI_MODEL})`);
+  });
+}
+module.exports = app;
+
