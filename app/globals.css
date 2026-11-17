@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   spec-sheet tokens: near-black, one blue ink accent, hairlines
+------------------------------------------------------------------- */
+:root {
+  --bg: #fcfcfc;
+  --fg: #111111;
+  --gray: #5c5c5c;
+  --faint: #707070;
+  --border: #e4e4e4;
+  --accent: #0060d1;
+  --accent-ink: #ffffff;
+  --card: #f6f6f6;
+  --icon-milk: #a97e3c;
+}
+.dark {
+  --bg: #0a0a0a;
+  --fg: #f2f2f2;
+  --gray: #a8a8a8;
+  --faint: #808080;
+  --border: #222222;
+  --accent: #4c9aff;
+  --accent-ink: #0a0a0a;
+  --card: #101010;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--gray);
+  font-family: var(--font-geist-sans), -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+* { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+/* terminal input signals focus with its caret, not a ring */
+input:focus-visible {
+  outline: none;
+}
+
+/* highlighter mark — accent as ink, not gradient */
+.mark {
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0 0.14em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* text links */
+.a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+.a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* the document grid: margin label | content */
+.doc {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .doc { grid-template-columns: 148px 1fr; gap: 0 40px; }
+}
+.doc-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--faint);
+  padding-top: 5px;
+}
+/* on desktop the label follows you down its section */
+@media (min-width: 768px) {
+  .doc-label { position: sticky; top: 24px; align-self: start; }
+}
+
+/* entrance */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}

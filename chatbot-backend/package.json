@@ -1,18 +1,20 @@
 {
   "name": "chatbot-backend",
-  "version": "1.0.0",
-  "description": "Backend for Gemini-powered chatbot",
+  "version": "2.0.0",
+  "description": "Assistant backend for kshitijkaria.github.io (Gemini, with a fixed fact sheet and whitelisted actions)",
   "main": "server.js",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.1",
-    "express": "^4.18.2"
+    "cors": "2.8.5",
+    "dotenv": "17.2.1",
+    "express": "4.22.3"
   }
 }
